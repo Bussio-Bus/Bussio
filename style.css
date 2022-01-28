@@ -1,7 +1,54 @@
+body{
+    padding: 5% 10% 5% 10%;
+}
+
 .Ueberschrift{
     justify-content: center;
     text-align: center;
 }
-.table-responsive{
-    padding: 0px 100px 0px 100px;
+
+.Bushaltestelle-div{
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-content: baseline;
 }
+
+#Bushaltestelle-id{
+    padding-left: 20px;
+    position: absolute;
+    bottom: 0;
+}
+
+.table-responsive{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.AndereInformationen-table{
+    display: flex;
+    min-height: 180px;
+    max-height: 200px;
+    display: table;
+    min-width: 100%;
+    #background-color: red;
+}
+
+.AndereInformationen-tablecell{
+    justify-content: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    display: table-cell;
+}
+
+.AndereInformationen-img{
+    display: block;
+    height: 100px;
+    width: 100px;
+}
+
+
+.Jetztige-Zeit-Div{
+    text-align: left;
+}
+
