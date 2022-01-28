@@ -2,3 +2,6 @@
     justify-content: center;
     text-align: center;
 }
+.table-responsive{
+    padding: 0px 100px 0px 100px;
+}
