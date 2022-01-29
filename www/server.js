@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
+const cheerio = require('cheerio')
+const fs = require('fs');
 const app = express()
-
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 //Middleware which parses Requestbody as JSON
@@ -10,6 +12,12 @@ const PORT = 8080;
 
 //starting server and adding a callback function to notify when it has started
 app.listen(PORT, () => console.log(`[SERVER]: running on localhost: ${PORT}`));
+
+
+app.get("/", (req, res) =>{
+    res.sendFile(path.join(__dirname, '/index.html'));
+});
+
 
 //Adds a test GET request
 app.get("/test", function (req, res) {
@@ -49,7 +57,7 @@ app.get("/GET_BUS_INFO/:name/:dd/:mm/:hh/", async (req, res) =>{
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json=data); //data is the actual information we need in json
     if(json){
-        console.log("[SERVER]: "+json)
+        console.log("[SERVER]: sending info")
         res.status(200).send(json);
     }else{
         console.log("[SERVER]: unable to get info")
@@ -57,3 +65,10 @@ app.get("/GET_BUS_INFO/:name/:dd/:mm/:hh/", async (req, res) =>{
     }
 
 });
+
+async function generate_table(){
+    let html = fs.readFileSync(path.join(__dirname, '/index.html')).toString();
+    cheerio.load(html);
+
+}
+generate_table();
