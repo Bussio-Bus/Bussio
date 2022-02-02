@@ -9,11 +9,9 @@ async function fetch_bus_info(){
         .then(data => json = data); //data is the actual information we need in json
 
 
-    console.log(json);
+    //console.log(json);
     //print_info(json)
-    for(line=0; line<5; line++){
-        feedtable_line(json, line)
-    }
+    feedtable(json);
     //setTimeout(fetch_bus_info, 2000)
 }
 
@@ -25,10 +23,11 @@ function print_info(json){
 }
 
 
-let bus_table_current_row=1;
+let bus_table_current_row=0;
 function feedtable_line(json, line=0){
-    let table = document.getElementById("bus-table");
+    let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
     var row = table.insertRow(bus_table_current_row++);
+
 
     for(let column=0; column<5; column++){
         var cell = row.insertCell(column);
@@ -38,11 +37,9 @@ function feedtable_line(json, line=0){
 }
 
 function feedtable(json){
-    for (const linesKey in json.servingLines.lines) {
-        //console.log(json.servingLines.lines[linesKey].mode.destination + " " + json.servingLines.lines[linesKey].mode.name)
-        feedtable_line(servingLines.lines[linesKey]);
+    for(line=0; line<5; line++){
+        feedtable_line(json, line)
     }
-    console.log("-------------------------------------------");
 }
 
 function getInformation(index, json){
@@ -52,14 +49,13 @@ function getInformation(index, json){
     }
 
     switch (index){
-        case 0: string = bus_table_current_row-1; break;
+        case 0: string = bus_table_current_row; break;
         case 1: string = json.mode.number; break;
         case 2: string = json.mode.destination; break;
         case 3: string = json.mode.number; break;
         case 4: string = json.mode.destination;
     }
 
-    console.log(string);
     return string;
 }
 
