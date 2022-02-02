@@ -6,9 +6,11 @@ const fs = require('fs');
 const app = express()
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
+app.options('*', cors())
+app.use(cors())
+
 //Middleware which parses Requestbody as JSON
 app.use(express.json());
-app.options('*', cors())
 const PORT = 8080;
 
 //starting server and adding a callback function to notify when it has started
