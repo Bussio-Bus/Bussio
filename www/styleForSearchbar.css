@@ -1,0 +1,42 @@
+body{
+    padding: 5% 10% 5% 10%;
+}
+
+.Ueberschrift{
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 100px;
+}
+.desc{
+    margin-left: 35%;
+
+}
+
+
+#searchbar{
+    margin-left: 35%;
+    padding:15px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+input[type=text] {
+    width: 30%;
+    max-width: 500px;
+    -webkit-transition: width 0.15s ease-in-out;
+    transition: width 0.15s ease-in-out;
+}
+
+
+input[type=text]:focus {
+    width: 70%;
+}
+
+#list{
+    font-size:  1.5em;
+    margin-left: 35%;
+}
+
+.haltestelle{
+    display: list-item;
+}

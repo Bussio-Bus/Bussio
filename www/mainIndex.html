@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Bussio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styleForSearchbar.css">
+</head>
+
+<body>
+<div class="Ueberschrift">
+    <h1>Bussio</h1>
+</div>
+
+<div class="desc">
+    <p>Welche Haltestelle möchtest du anzeigen</p>
+</div>
+
+<script>
+    function suche_haltestelle() {
+        let input = document.getElementById('searchbar').value
+        input=input.toLowerCase();
+        let x = document.getElementsByClassName('haltestelle');
+
+        for (i = 0; i < x.length; i++) {
+            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+            }
+            else {
+                x[i].style.display="list-item";
+            }
+        }
+    }
+</script>
+
+
+
+<input id="searchbar" onkeyup="suche_haltestelle()" type="text"
+       name="search" placeholder="Haltestelle..">
+
+<ol id="list">
+    <li class="haltestelle">Cat</li>
+    <li class="haltestelle">Dog</li>
+    <li class="haltestelle">Elephant</li>
+    <li class="haltestelle">Fish</li>
+    <li class="haltestelle">Gorilla</li>
+    <li class="haltestelle">Monkey</li>
+    <li class="haltestelle">Turtle</li>
+    <li class="haltestelle">Whale</li>
+    <li class="haltestelle">Aligator</li>
+    <li class="haltestelle">Donkey</li>
+    <li class="haltestelle">Horse</li>
+</ol>
+
+</body>
+
+</html>
