@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors')
 const path = require('path');
 const cheerio = require('cheerio')
 const fs = require('fs');
@@ -7,7 +8,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 //Middleware which parses Requestbody as JSON
 app.use(express.json());
-
+app.options('*', cors())
 const PORT = 8080;
 
 //starting server and adding a callback function to notify when it has started
