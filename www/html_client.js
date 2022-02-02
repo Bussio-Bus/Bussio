@@ -4,14 +4,16 @@ async function fetch_bus_info(){
     let json = null;
 
     //Gets information from URL and returns Promise which has to be resolved using then
-    const response = await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE/29/01/13')
+    const response = await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE')
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json = data); //data is the actual information we need in json
 
 
     console.log(json);
     //print_info(json)
-    //feedtable_line(json)
+    for(line=0; line<5; line++){
+        feedtable_line(json, line)
+    }
     //setTimeout(fetch_bus_info, 2000)
 }
 
@@ -23,14 +25,14 @@ function print_info(json){
 }
 
 
-let bus_table_current_row=4;
-function feedtable_line(json){
+let bus_table_current_row=1;
+function feedtable_line(json, line=0){
     let table = document.getElementById("bus-table");
     var row = table.insertRow(bus_table_current_row++);
 
     for(let column=0; column<5; column++){
         var cell = row.insertCell(column);
-        var newText = document.createTextNode(getInformation(column, json));
+        var newText = document.createTextNode(getInformation(column, json.servingLines.lines[line]));
         cell.appendChild(newText)
     }
 }
@@ -45,22 +47,25 @@ function feedtable(json){
 
 function getInformation(index, json){
     let string="No Info"
-
-    switch (index){
-        case 0: string = index;
-        case 1: string = mode.name;
-        case 2: string = mode.destination;
-        case 3: string = mode.destination;
-        case 4: string = mode.destination;
+    if(json == undefined){
+        return string;
     }
 
+    switch (index){
+        case 0: string = bus_table_current_row-1; break;
+        case 1: string = json.mode.number; break;
+        case 2: string = json.mode.destination; break;
+        case 3: string = json.mode.number; break;
+        case 4: string = json.mode.destination;
+    }
 
+    console.log(string);
     return string;
 }
 
 
 
-feedtable_line();
+//feedtable_line();
 
 
 
