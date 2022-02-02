@@ -63,7 +63,14 @@ function getInformation(index, json){
 
 //feedtable_line();
 
+function setup(){
+    let element = document.getElementById("Jetzige-Zeit-id");
+    let today = new Date();
+    let time = today.getHours() + ":" + today.getMinutes();
 
+    element.innerHTML = time;
+}
 
 console.log("test");
 
+setup()
