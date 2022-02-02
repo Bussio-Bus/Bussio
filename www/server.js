@@ -48,15 +48,25 @@ app.post("/testPOST/:msg", (req, res) =>{
 
 //TODO: add check to verify that parameters are set or add default values
 //TODO: maybe add additional parameters like outputformat
-app.get("/GET_BUS_INFO/:name/:dd/:mm/:hh/", async (req, res) =>{
-    const name = req.params.name;
-    const day = req.params.dd;
-    const month = req.params.mm;
-    const hour = req.params.hh;
+app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
+    const name = req.params.name.split("_");
+    console.log(req.params.dd);
+    const day = req.params.dd === undefined ? new Date().getDate() : req.params.dd;
+    const month = req.params.mm === undefined ? new Date().getMonth() : req.params.mm;
+    const hour = req.params.hh === undefined ? new Date().getHours() : req.params.hh;
+    const minute = req.params.min === undefined ? new Date().getMinutes() : req.params.min;
+
+
+    let fetch_string="https://efa.sta.bz.it/apb/XML_DM_REQUEST?&locationServerActive=1&stateless=1&type_dm=any&mode=direct&outputFormat=json&name_dm=";
+    name.forEach(value => {fetch_string += value + "%20"});
+    fetch_string.slice(fetch_string.length, 1);
+    fetch_string+="&itdDateDayMonthYear="+day+"-"+month+"-" +new Date().getFullYear()
+    fetch_string+="&itdTime="+hour+""+minute
 
     console.log("[SERVER]: incoming GET_BUS_INFO request")
+    console.log("[SERVER]: request-> " + fetch_string);
     let json = null;
-    await fetch('https://efa.sta.bz.it/apb/XML_DM_REQUEST?&locationServerActive=1&stateless=1&type_dm=any&name_dm=Brixen%Dantestraße&mode=direct&outputFormat=json&itdDateDayMonthYear=29-01-2022')
+    await fetch(fetch_string)
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json=data); //data is the actual information we need in json
     if(json){
@@ -69,9 +79,10 @@ app.get("/GET_BUS_INFO/:name/:dd/:mm/:hh/", async (req, res) =>{
 
 });
 
+
+
 async function generate_table(){
     let html = fs.readFileSync(path.join(__dirname, '/index.html')).toString();
     cheerio.load(html);
 
 }
-generate_table();
