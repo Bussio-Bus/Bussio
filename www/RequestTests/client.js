@@ -5,7 +5,7 @@ async function fetch_bus_info(){
     let json = null;
 
     //Gets information from URL and returns Promise which has to be resolved using then
-    const response = await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE/29/01/13')
+    await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE/')
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json = data); //data is the actual information we need in json
 
