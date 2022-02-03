@@ -3,12 +3,12 @@ import fetch from "node-fetch"
 
 async function fetch_bus_info(){
     let json = null;
-
+//http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE/
     //Gets information from URL and returns Promise which has to be resolved using then
-    await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE/')
-        .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
-        .then(data => json = data); //data is the actual information we need in json
-
+    let response = await fetch("http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRASSE/");
+    console.log(await response.text());
+    //json = await response.json();
+    //console.log(json);
     print_info(json)
     setTimeout(fetch_bus_info, 2000)
 }

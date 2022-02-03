@@ -50,7 +50,6 @@ app.post("/testPOST/:msg", (req, res) =>{
 //TODO: maybe add additional parameters like outputformat
 app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     const name = req.params.name.split("_");
-    console.log(req.params.dd);
     const day = req.params.dd === undefined ? new Date().getDate() : req.params.dd;
     const month = req.params.mm === undefined ? new Date().getMonth() : req.params.mm;
     const hour = req.params.hh === undefined ? new Date().getHours() : req.params.hh;
@@ -66,9 +65,10 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     console.log("[SERVER]: incoming GET_BUS_INFO request")
     console.log("[SERVER]: request-> " + fetch_string);
     let json = null;
-    await fetch(fetch_string)
-        .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
-        .then(data => json=data); //data is the actual information we need in json
+
+    let response = await fetch(fetch_string);
+    json = await response.json();
+
     if(json){
         console.log("[SERVER]: sending info")
         res.status(200).send(json);
@@ -79,10 +79,3 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
 
 });
 
-
-
-async function generate_table(){
-    let html = fs.readFileSync(path.join(__dirname, '/index.html')).toString();
-    cheerio.load(html);
-
-}

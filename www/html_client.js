@@ -31,7 +31,7 @@ function feedtable_line(json, line=0){
 
     for(let column=0; column<5; column++){
         var cell = row.insertCell(column);
-        var newText = document.createTextNode(getInformation(column, json.servingLines.lines[line]));
+        var newText = document.createTextNode(getInformation(column, json.servingLines.lines[line], json.departureList[line]));
         cell.appendChild(newText)
     }
 }
@@ -42,17 +42,17 @@ function feedtable(json){
     }
 }
 
-function getInformation(index, json){
+function getInformation(index, json, json_Dep){
     let string="No Info"
     if(json == undefined){
         return string;
     }
-
+    console.log(json_Dep);
     switch (index){
         case 0: string = bus_table_current_row; break;
         case 1: string = json.mode.number; break;
         case 2: string = json.mode.destination; break;
-        case 3: string = json.mode.number; break;
+        case 3: string = json_Dep.countdown; break;
         case 4: string = json.mode.destination;
     }
 
