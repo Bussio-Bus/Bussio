@@ -31,6 +31,14 @@
             }
         }
     }
+
+    function clicked(el){
+
+
+        console.log(el)
+
+        window.location.href = 'index.html?haltestelle=' + el.innerHTML;
+    }
 </script>
 
 
@@ -39,18 +47,19 @@
        name="search" placeholder="Haltestelle..">
 
 <ol id="list">
-    <li class="haltestelle">Cat</li>
-    <li class="haltestelle">Dog</li>
-    <li class="haltestelle">Elephant</li>
-    <li class="haltestelle">Fish</li>
-    <li class="haltestelle">Gorilla</li>
-    <li class="haltestelle">Monkey</li>
-    <li class="haltestelle">Turtle</li>
-    <li class="haltestelle">Whale</li>
-    <li class="haltestelle">Aligator</li>
-    <li class="haltestelle">Donkey</li>
-    <li class="haltestelle">Horse</li>
+    <li class="haltestelle" onclick="clicked(this)">Cat</li>
+    <li class="haltestelle" onclick="clicked(this)">Dog</li>
+    <li class="haltestelle" onclick="clicked(this)">Elephant</li>
+    <li class="haltestelle" onclick="clicked(this)">Fish</li>
+    <li class="haltestelle" onclick="clicked(this)">Gorilla</li>
+    <li class="haltestelle" onclick="clicked(this)">Monkey</li>
+    <li class="haltestelle" onclick="clicked(this)">Turtle</li>
+    <li class="haltestelle" onclick="clicked(this)">Whale</li>
+    <li class="haltestelle" onclick="clicked(this)">Aligator</li>
+    <li class="haltestelle" onclick="clicked(this)" id="donkey_id">Donkey</li>
+    <li class="haltestelle" onclick="clicked(this)">Horse</li>
 </ol>
+
 
 </body>
 

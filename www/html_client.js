@@ -1,4 +1,17 @@
+function suche_haltestelle() {
+    let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let x = document.getElementsByClassName('haltestelle');
 
+    for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="list-item";
+        }
+    }
+}
 
 async function fetch_bus_info(){
     let json = null;
@@ -62,13 +75,33 @@ function getInformation(index, json){
 
 
 //feedtable_line();
-
-function setup(){
+function updatetime(){
     let element = document.getElementById("Jetzige-Zeit-id");
     let today = new Date();
-    let time = today.getHours() + ":" + today.getMinutes();
+    let time = today.getHours() + ":" + ((parseInt(today.getMinutes()) > 10) ? today.getMinutes() : "0"+today.getMinutes()) + ":" + ((parseInt(today.getSeconds()) > 10) ? today.getSeconds() : "0"+today.getSeconds());
+
+
 
     element.innerHTML = time;
+    setTimeout(updatetime, 1000);
+}
+
+
+function setup(){
+    updatetime();
+
+    let halte_id = document.getElementById("Bushaltestelle-id")
+
+    //const urlSearchParams = new URLSearchParams(window.location.search);
+    //const params = Object.fromEntries(urlSearchParams.entries());
+    const params = new URLSearchParams(window.location.search)
+
+    if(params.has('haltestelle')){
+        let val = params.get('haltestelle');
+        halte_id.innerHTML = val;
+    }else{
+        window.location.href = 'mainIndex.html';
+    }
 }
 
 console.log("test");
