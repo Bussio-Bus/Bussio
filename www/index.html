@@ -34,8 +34,8 @@
 
     function clicked(el){
         console.log(el)
-
-        window.location.href = 'info.html?haltestelle=' + el.innerHTML;
+        let name = el.innerHTML.replace(" ", "_")
+        window.location.href = 'info.html?haltestelle=' + name;
     }
 </script>
 
@@ -45,10 +45,10 @@
        name="search" placeholder="Haltestelle..">
 
 <ol id="list">
-    <li class="haltestelle" onclick="clicked(this)">Cat</li>
-    <li class="haltestelle" onclick="clicked(this)">Dog</li>
-    <li class="haltestelle" onclick="clicked(this)">Elephant</li>
-    <li class="haltestelle" onclick="clicked(this)">Fish</li>
+    <li class="haltestelle" onclick="clicked(this)">Brixen Dantestraße</li>
+    <li class="haltestelle" onclick="clicked(this)">Brixen Brixen Bahnhof</li>
+    <li class="haltestelle" onclick="clicked(this)">Sterzing Bahnhof</li>
+    <li class="haltestelle" onclick="clicked(this)">Sterzing Nordpark</li>
     <li class="haltestelle" onclick="clicked(this)">Gorilla</li>
     <li class="haltestelle" onclick="clicked(this)">Monkey</li>
     <li class="haltestelle" onclick="clicked(this)">Turtle</li>

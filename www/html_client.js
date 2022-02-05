@@ -1,3 +1,5 @@
+let serverRequestURL=""
+
 function suche_haltestelle() {
     let input = document.getElementById('searchbar').value
     input=input.toLowerCase();
@@ -17,7 +19,7 @@ async function fetch_bus_info(){
     let json = null;
 
     //Gets information from URL and returns Promise which has to be resolved using then
-    const response = await fetch('http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE')
+    const response = await fetch(serverRequestURL)
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json = data); //data is the actual information we need in json
 
@@ -78,7 +80,7 @@ function getInformation(index, json, json_Dep){
 function updatetime(){
     let element = document.getElementById("Jetzige-Zeit-id");
     let today = new Date();
-    let time = today.getHours() + ":" + ((parseInt(today.getMinutes()) > 10) ? today.getMinutes() : "0"+today.getMinutes()) + ":" + ((parseInt(today.getSeconds()) > 10) ? today.getSeconds() : "0"+today.getSeconds());
+    let time = today.getHours() + ":" + ((parseInt(today.getMinutes()) > 10) ? today.getMinutes() : "0"+today.getMinutes()) + ":" + ((parseInt(today.getSeconds()) > 9) ? today.getSeconds() : "0"+today.getSeconds());
 
 
 
@@ -86,22 +88,29 @@ function updatetime(){
     setTimeout(updatetime, 1000);
 }
 
-
-function setup(){
-    updatetime();
-
-    let halte_id = document.getElementById("Bushaltestelle-id")
-
+function writeNameAndRequestURL(){
     //const urlSearchParams = new URLSearchParams(window.location.search);
     //const params = Object.fromEntries(urlSearchParams.entries());
     const params = new URLSearchParams(window.location.search)
+    let halte_id = document.getElementById("Bushaltestelle-id")
 
     if(params.has('haltestelle')){
         let val = params.get('haltestelle');
-        halte_id.innerHTML = val;
+        halte_id.innerHTML = val.replace("_"," ");
+
+        serverRequestURL = "http://localhost:8080/GET_BUS_INFO/" + val;
+        console.log("Server Request URL = " + serverRequestURL)
+        //http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE
+
     }else{
         window.location.href = 'index.html';
     }
+}
+
+function setup(){
+    updatetime();
+    writeNameAndRequestURL();
+    fetch_bus_info();
 }
 
 console.log("test");
