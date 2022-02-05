@@ -75,6 +75,15 @@ function getInformation(index, json, json_Dep){
 }
 
 
+function reload_table(){
+    let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
+
+    while(bus_table_current_row>0){
+        table.deleteRow((bus_table_current_row--)-1)
+    }
+
+    fetch_bus_info();
+}
 
 //feedtable_line();
 function updatetime(){

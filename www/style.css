@@ -7,6 +7,11 @@ body{
     text-align: center;
 }
 
+#reloadIcon_id{
+    width: 20px;
+    height: 20px;
+}
+
 .Bushaltestelle-div{
     position: relative;
     display: flex;
