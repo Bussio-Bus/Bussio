@@ -100,7 +100,7 @@ function setup(){
         let val = params.get('haltestelle');
         halte_id.innerHTML = val;
     }else{
-        window.location.href = 'mainIndex.html';
+        window.location.href = 'index.html';
     }
 }
 

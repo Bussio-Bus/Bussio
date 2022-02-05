@@ -4,57 +4,61 @@
     <meta charset="UTF-8">
     <title>Bussio</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleForSearchbar.css">
 </head>
 
 <body>
-    <div class="Ueberschrift">
-        <h1>Bussio</h1>
-    </div>
+<div class="Ueberschrift">
+    <h1>Bussio</h1>
+</div>
 
-    <div class="Bushaltestelle-div">
-        <div>
-            <h2>Bushaltestelle: </h2>
-        </div>
-        <div>
-            <h4 id="Bushaltestelle-id">Dantestraße</h4>
-        </div>
-    </div>
+<div class="desc">
+    <p>Welche Haltestelle möchtest du anzeigen</p>
+</div>
 
-    <p id="test" onclick="fetch_bus_info()">test</p>
+<script>
+    function suche_haltestelle() {
+        let input = document.getElementById('searchbar').value
+        input=input.toLowerCase();
+        let x = document.getElementsByClassName('haltestelle');
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover" id="bus-table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nummer</th>
-                <th scope="col">Ziel</th>
-                <th scope="col">Abfahrtszeit</th>
-                <th scope="col">Verspätung</th>
-            </tr>
-            </thead>
-            <tbody>
+        for (i = 0; i < x.length; i++) {
+            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+            }
+            else {
+                x[i].style.display="list-item";
+            }
+        }
+    }
 
-            </tbody>
-        </table>
-    </div>
+    function clicked(el){
+        console.log(el)
 
-    <div class="AndereInformationen-table">
-        <div class="AndereInformationen-tablecell">
-            <img class="AndereInformationen-img" src="res/sun.png">
-        </div>
-        <div class="AndereInformationen-tablecell">
-            <img class="AndereInformationen-img" src="res/sun.png">
-        </div>
-    </div>
+        window.location.href = 'info.html?haltestelle=' + el.innerHTML;
+    }
+</script>
 
 
-    <div class="Jetztige-Zeit-Div">
-        <h2 id="Jetzige-Zeit-id">13:12</h2>
-    </div>
 
-    <script type="text/javascript" src="html_client.js"></script>
+<input id="searchbar" onkeyup="suche_haltestelle()" type="text"
+       name="search" placeholder="Haltestelle..">
+
+<ol id="list">
+    <li class="haltestelle" onclick="clicked(this)">Cat</li>
+    <li class="haltestelle" onclick="clicked(this)">Dog</li>
+    <li class="haltestelle" onclick="clicked(this)">Elephant</li>
+    <li class="haltestelle" onclick="clicked(this)">Fish</li>
+    <li class="haltestelle" onclick="clicked(this)">Gorilla</li>
+    <li class="haltestelle" onclick="clicked(this)">Monkey</li>
+    <li class="haltestelle" onclick="clicked(this)">Turtle</li>
+    <li class="haltestelle" onclick="clicked(this)">Whale</li>
+    <li class="haltestelle" onclick="clicked(this)">Aligator</li>
+    <li class="haltestelle" onclick="clicked(this)" id="donkey_id">Donkey</li>
+    <li class="haltestelle" onclick="clicked(this)">Horse</li>
+</ol>
+
+
 </body>
 
 </html>
