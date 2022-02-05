@@ -1,5 +1,7 @@
 let serverRequestURL=""
 
+
+//TODO: verspätung entfernen und wos onderes adden vlt
 function suche_haltestelle() {
     let input = document.getElementById('searchbar').value
     input=input.toLowerCase();
@@ -24,10 +26,21 @@ async function fetch_bus_info(){
         .then(data => json = data); //data is the actual information we need in json
 
 
+    try{
+        let response = await fetch(serverRequestURL);
+        json = await response.json();
+    }
+    catch(e){
+        console.log("Error")
+    }
+
+
     //console.log(json);
     //print_info(json)
-    feedtable(json);
-    //setTimeout(fetch_bus_info, 2000)
+    if(json)
+        feedtable(json);
+    else
+        setTimeout(fetch_bus_info, 5000)
 }
 
 function print_info(json){
@@ -67,7 +80,7 @@ function getInformation(index, json, json_Dep){
         case 0: string = bus_table_current_row; break;
         case 1: string = json.mode.number; break;
         case 2: string = json.mode.destination; break;
-        case 3: string = json_Dep.countdown; break;
+        case 3: string = json_Dep.dateTime.hour + ":" + json_Dep.dateTime.minute; break;
         case 4: string = json.mode.destination;
     }
 
