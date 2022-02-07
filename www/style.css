@@ -111,3 +111,21 @@ body{
         transform: rotate(1turn);
     }
 }
+
+#reload_error_div_id{
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-content: baseline;
+}
+.error_msg_div_class_show{
+    display: block;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.error_msg_div_class_none{
+    display: none;
+    padding-left: 50px;
+    padding-top: 10px;
+}

@@ -17,19 +17,22 @@ function suche_haltestelle() {
     }
 }
 
+function displayError(){
+    document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_none")
+    document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
+}
+
 async function fetch_bus_info(){
     let json = null;
 
     //Gets information from URL and returns Promise which has to be resolved using then
-    const response = await fetch(serverRequestURL)
-        .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
-        .then(data => json = data); //data is the actual information we need in json
     try{
         let response = await fetch(serverRequestURL);
         json = await response.json();
     }
     catch(e){
         console.log("Error")
+        displayError();
     }
 
 
