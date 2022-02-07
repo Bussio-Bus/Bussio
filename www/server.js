@@ -111,6 +111,7 @@ app.get("/GET_WEATHER_INFO/:name?/", async (req, res)=>{
     }
     catch (e){
         console.log("[SERVER]: Failed to fetch, reason: \n" + e)
+        console.log("[SERVER]: unable to get info")
         res.status(400).send("unable to get info");
     }
 
