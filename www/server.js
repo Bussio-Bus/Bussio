@@ -81,7 +81,25 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     }
 
 });
-app.get("/GET_WEATHER_INFO/:name/:date?", (req, res)=>{
+app.get("/GET_WEATHER_INFO/:name?/:date?", async (req, res)=>{
+    console.log("[SERVER]: incoming GET_WEATHER_INFO request")
+    let fetch_string = "http://daten.buergernetz.bz.it/services/weather/station?categoryId=1&lang=de&format=json";
+    console.log("[SERVER]: request-> " + fetch_string);
+
+    let json;
+    try{
+        let response = await fetch(fetch_string);
+        json = await response.json();
+        res.status(200).send(json)
+
+    }
+    catch (e){
+        console.log("[SERVER]: Failed to fetch, reason: \n" + e)
+        console.log("[SERVER]: unable to get info")
+        res.status(400).send("unable to get info");
+    }
+
+
 
 });
 
