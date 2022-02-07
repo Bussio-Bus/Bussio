@@ -60,7 +60,7 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     name.forEach(value => {fetch_string += value + "%20"});
     fetch_string.substring(0, fetch_string.length - 1);
     fetch_string+="&itdDateDayMonthYear="+day+"-"+month+"-" +new Date().getFullYear()
-    fetch_string+="&itdTime="+hour+""+ (parseInt(minute) > 9 ? minute : "0" + minute)
+    fetch_string+="&itdTime="+hour+""+ (parseInt(minute) > 9 ? minute.toString()  : "0" + minute.toString())
 
     console.log("[SERVER]: incoming GET_BUS_INFO request")
     console.log("[SERVER]: request-> " + fetch_string);

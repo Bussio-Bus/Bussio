@@ -24,8 +24,6 @@ async function fetch_bus_info(){
     const response = await fetch(serverRequestURL)
         .then(response => response.json()) //the fetch returns the entire HTTP response so inorder to extract it the .json() Method has to be used which returns another promise
         .then(data => json = data); //data is the actual information we need in json
-
-
     try{
         let response = await fetch(serverRequestURL);
         json = await response.json();
@@ -81,22 +79,27 @@ function getInformation(index, json, json_Dep){
         case 0: string = bus_table_current_row; break;
         case 1: string = json.mode.number; break;
         case 2: string = json.mode.destination; break;
-        case 3: string = json_Dep.dateTime.hour + ":" + json_Dep.dateTime.minute; break;
-        case 4: string = json.mode.destination;
+        case 3: string = json_Dep.dateTime.hour + ":" + (json_Dep.dateTime.minute > 9 ? json_Dep.dateTime.minute : "0" + json_Dep.dateTime.minute); break;
+        case 4: string = json_Dep.countdown;
     }
 
     return string;
 }
 
 
-function reload_table(){
+async function reload_table() {
+    document.getElementById("reload_id").classList.toggle('button--loading')
     let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
+    bus_table_current_row=0;
 
-    while(bus_table_current_row>0){
-        table.deleteRow((bus_table_current_row--)-1)
+    await fetch_bus_info();
+
+    while (bus_table_current_row+5 > 5) {
+        table.deleteRow((bus_table_current_row--) - 1+5)
     }
 
-    fetch_bus_info();
+
+    document.getElementById("reload_id").classList.toggle('button--loading')
 }
 
 //feedtable_line();

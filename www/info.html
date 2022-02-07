@@ -21,7 +21,11 @@
         </div>
     </div>
 
-    <img src="res/reloadIcon.png" id="reloadIcon_id" onclick="reload_table()">
+
+    <button id="reload_id" type="button" class="button" onclick="reload_table()">
+        <span class="button__text">Reload</span>
+    </button>
+
 
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="bus-table">
@@ -31,7 +35,7 @@
                 <th scope="col">Nummer</th>
                 <th scope="col">Ziel</th>
                 <th scope="col">Abfahrtszeit</th>
-                <th scope="col">Verspätung</th>
+                <th scope="col">Abfahrt in</th>
             </tr>
             </thead>
             <tbody>
