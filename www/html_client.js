@@ -103,7 +103,7 @@ function reload_table(){
 function updatetime(){
     let element = document.getElementById("Jetzige-Zeit-id");
     let today = new Date();
-    let time = today.getHours() + ":" + ((parseInt(today.getMinutes()) > 10) ? today.getMinutes() : "0"+today.getMinutes()) + ":" + ((parseInt(today.getSeconds()) > 9) ? today.getSeconds() : "0"+today.getSeconds());
+    let time = ((parseInt(today.getHours()) > 10) ? today.getHours() : "0"+today.getHours()) + ":" + ((parseInt(today.getMinutes()) > 10) ? today.getMinutes() : "0"+today.getMinutes()) + ":" + ((parseInt(today.getSeconds()) > 9) ? today.getSeconds() : "0"+today.getSeconds());
 
 
 
