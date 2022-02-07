@@ -6,6 +6,8 @@ const fs = require('fs');
 const app = express()
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
+const regions = ["bozen", "burggrafenamt", "vinschgau", "eisacktal", "wipptal", "pustertal", "ladinien"];
+
 app.options('*', cors())
 app.use(cors())
 
@@ -81,21 +83,33 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     }
 
 });
-app.get("/GET_WEATHER_INFO/:name?/:date?", async (req, res)=>{
+app.get("/GET_WEATHER_INFO/:name?/", async (req, res)=>{
     console.log("[SERVER]: incoming GET_WEATHER_INFO request")
-    let fetch_string = "http://daten.buergernetz.bz.it/services/weather/station?categoryId=1&lang=de&format=json";
+    //let fetch_string = "http://daten.buergernetz.bz.it/services/weather/station?categoryId=1&lang=de&format=json";
+    let fetch_string = "http://daten.buergernetz.bz.it/services/weather/bulletin?format=json&lang=de"
     console.log("[SERVER]: request-> " + fetch_string);
 
+    let name = req.params.name.toLowerCase();
     let json;
     try{
         let response = await fetch(fetch_string);
         json = await response.json();
-        res.status(200).send(json)
-
+        if(name){
+            if(regions.indexOf(name) != -1){ //json.tomorrow.stationData[regions.indexOf(name)], json.today.stationData[regions.indexOf(name)]
+                let ret_json =[json.tomorrow.stationData[regions.indexOf(name)], json.today.stationData[regions.indexOf(name)]]
+                res.status(200).send(ret_json)
+                console.log("[SERVER]: Sending info for: " + name)
+            }else{
+                res.status(400).send("Unkown region: " + name + ".\n Available regions: " + regions.toString())
+                console.log("[SERVER]: Unkown region, sending error")
+            }
+        }else{
+            console.log("[SERVER]: Sending info")
+            res.status(200).send(json)
+        }
     }
     catch (e){
         console.log("[SERVER]: Failed to fetch, reason: \n" + e)
-        console.log("[SERVER]: unable to get info")
         res.status(400).send("unable to get info");
     }
 
