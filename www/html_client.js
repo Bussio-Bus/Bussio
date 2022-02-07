@@ -56,6 +56,7 @@ function feedtable_line(json, line=0){
     let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
     var row = table.insertRow(bus_table_current_row++);
 
+    console.log(json);
 
     for(let column=0; column<5; column++){
         var cell = row.insertCell(column);

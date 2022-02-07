@@ -58,9 +58,9 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
 
     let fetch_string="https://efa.sta.bz.it/apb/XML_DM_REQUEST?&locationServerActive=1&stateless=1&type_dm=any&mode=direct&outputFormat=json&name_dm=";
     name.forEach(value => {fetch_string += value + "%20"});
-    fetch_string.slice(fetch_string.length-1, 1);
+    fetch_string.substring(0, fetch_string.length - 1);
     fetch_string+="&itdDateDayMonthYear="+day+"-"+month+"-" +new Date().getFullYear()
-    fetch_string+="&itdTime="+hour+""+minute
+    fetch_string+="&itdTime="+hour+""+ (parseInt(minute) > 9 ? minute : "0" + minute)
 
     console.log("[SERVER]: incoming GET_BUS_INFO request")
     console.log("[SERVER]: request-> " + fetch_string);
@@ -81,7 +81,7 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     }
 
 });
-app.get("/GET_WEATHER_INFO/:name/:date?"){
+app.get("/GET_WEATHER_INFO/:name/:date?", (req, res)=>{
 
-}
+});
 
