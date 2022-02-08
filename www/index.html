@@ -16,29 +16,6 @@
     <p>Welche Haltestelle möchtest du anzeigen</p>
 </div>
 
-<script>
-    function suche_haltestelle() {
-        let input = document.getElementById('searchbar').value
-        input=input.toLowerCase();
-        let x = document.getElementsByClassName('haltestelle');
-
-        for (i = 0; i < x.length; i++) {
-            if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                x[i].style.display="none";
-            }
-            else {
-                x[i].style.display="list-item";
-            }
-        }
-    }
-
-    function clicked(el){
-        console.log(el)
-        let name = el.innerHTML.replace(" ", "_")
-        window.location.href = 'info.html?haltestelle=' + name;
-    }
-</script>
-
 
 
 <input id="searchbar" onkeyup="suche_haltestelle()" type="text"
@@ -58,7 +35,60 @@
     <li class="haltestelle" onclick="clicked(this)">Horse</li>
 </ol>
 
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table id="All_stops_id" class="table table-bordered table-striped mb-0">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
 
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function suche_haltestelle() { //maybe https://www.w3schools.com/howto/howto_js_filter_table.asp
+        let input = document.getElementById('searchbar').value
+        input=input.toLowerCase();
+        let x = document.getElementsByClassName('haltestelle');
+
+        for (i = 0; i < x.length; i++) {
+            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+            }
+            else {
+                x[i].style.display="list-item";
+            }
+        }
+    }
+
+    function clicked(el){
+        console.log(el)
+        let name = el.innerHTML.replace(" ", "_")
+        window.location.href = 'info.html?haltestelle=' + name;
+    }
+
+
+    function feedtable(json){
+        for(line=0; line<5; line++){
+            feedtable_line(json, line)
+        }
+    }
+
+    function feedtable_line(json, line=0){
+        let table = document.getElementById("All_stops_id").getElementsByTagName("tbody")[0];
+        var row = table.insertRow();
+
+        var cell = row.insertCell(0);
+        cell.innerHTML = "<p class='haltestelle' onclick=clicked(this)>test</p>"
+        console.log("hmm")
+    }
+
+    feedtable("test");
+</script>
 </body>
 
 </html>
