@@ -58,6 +58,7 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     const minute = req.params.min === undefined ? new Date().getMinutes() : req.params.min;
 
 
+
     let fetch_string="https://efa.sta.bz.it/apb/XML_DM_REQUEST?&locationServerActive=1&stateless=1&type_dm=any&mode=direct&outputFormat=json&name_dm=";
     name.forEach(value => {fetch_string += value + "%20"});
     fetch_string.substring(0, fetch_string.length - 1);
@@ -70,6 +71,18 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     try{
         let response = await fetch(fetch_string);
         json = await response.json();
+
+        if(json.servingLines != null){
+            if(!checkDuplicateStops(name)) {
+                addStop(name)
+                console.log("[SERVER]: Added new stop, " + name)
+            }
+        }
+        else{
+            console.log("[SERVER]: serving lines is null")
+            res.status(400).send("unable to get info");
+            return;
+        }
     }
     catch(e){
         console.log("[SERVER]: Failed to fetch, reason: \n" + e)
@@ -139,3 +152,52 @@ app.get("/GET_STOPS/", (req, res)=>{
 
 
 });
+
+function addStop(stop){
+    stop = stop.replaceAll("_", " ");
+    stop = stop.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+    let stream = fs.createWriteStream("./res/stops", {flags:'a'})
+    stream.write(","+stop);
+    return true
+}
+
+app.post("/ADD_STOP/:stop", async (req, res) =>{
+    const stop = req.params.stop.toLowerCase()
+    console.log("[SERVER]: incoming ADD_STOP request");
+    if(checkDuplicateStops(stop)){
+        res.status(400).send("cannot add, stop exists")
+        return
+    }
+
+    let fetch_string="https://efa.sta.bz.it/apb/XML_DM_REQUEST?&locationServerActive=1&stateless=1&type_dm=any&mode=direct&outputFormat=json&name_dm=";
+    stop.split("_").forEach(value => {fetch_string += value + "%20"});
+    fetch_string.substring(0, fetch_string.length - 1);
+    try{
+        let response = await fetch(fetch_string);
+        json = await response.json();
+        if(json.servingLines.lines != null){
+            if(addStop(stop)){
+                console.log("[SERVER]: Added stop, " +stop)
+                res.status(200).send("Added stop, thank you :)")
+            }
+        }
+        else{
+            console.log("[SERVER]: could not add stop: " + stop);
+            res.status(400).send("cannot add, servingLines null")
+        }
+    }
+    catch(e){
+        console.log("[SERVER]: an error has occured: \n" + e.stack)
+        res.status(400).send("failed");
+    }
+});
+
+function checkDuplicateStops(stop){
+    stop = stop.replaceAll("_", " ");
+    const data = fs.readFileSync('./res/stops', 'utf8')
+
+    if(data.toLowerCase().split(",").includes(stop))
+        return true
+    else
+        return false
+}
