@@ -34,22 +34,30 @@ body{
     display: flex;
     min-height: 180px;
     max-height: 200px;
-    display: table;
     min-width: 100%;
     #background-color: red;
 }
 
 .AndereInformationen-tablecell{
-    justify-content: center;
+    #justify-content: center;
     padding-left: 0px;
-    padding-right: 0px;
-    display: table-cell;
+    padding-right: 20%;
+    display: flex;
 }
 
 .AndereInformationen-img{
     display: block;
     height: 100px;
     width: 100px;
+}
+.AndereInformationen-info p{
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.AndereInformationen-info{
+    padding-left: 50px;
 }
 
 
@@ -122,10 +130,12 @@ body{
     display: block;
     padding-left: 50px;
     padding-top: 10px;
+    color: red;
 }
 
 .error_msg_div_class_none{
     display: none;
     padding-left: 50px;
     padding-top: 10px;
+    color: red;
 }

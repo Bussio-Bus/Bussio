@@ -1,4 +1,5 @@
-let serverRequestURL=""
+let serverRequestURL_bus=""
+let serverRequestURL_weather="http://localhost:8080/GET_WEATHER_INFO/Eisacktal"
 
 
 //TODO: verspätung entfernen und wos onderes adden vlt
@@ -22,12 +23,17 @@ function displayError(){
     document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
 }
 
+function hideError(){
+    document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_show")
+    document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_none")
+}
+
 async function fetch_bus_info(){
     let json = null;
 
     //Gets information from URL and returns Promise which has to be resolved using then
     try{
-        let response = await fetch(serverRequestURL);
+        let response = await fetch(serverRequestURL_bus);
         json = await response.json();
     }
     catch(e){
@@ -57,7 +63,7 @@ function feedtable_line(json, line=0){
     let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
     var row = table.insertRow(bus_table_current_row++);
 
-    console.log(json);
+    //console.log(json);
 
     for(let column=0; column<5; column++){
         var cell = row.insertCell(column);
@@ -77,7 +83,7 @@ function getInformation(index, json, json_Dep){
     if(json == undefined){
         return string;
     }
-    console.log(json_Dep);
+    //console.log(json_Dep);
     switch (index){
         case 0: string = bus_table_current_row; break;
         case 1: string = json.mode.number; break;
@@ -91,6 +97,7 @@ function getInformation(index, json, json_Dep){
 
 
 async function reload_table() {
+    hideError();
     document.getElementById("reload_id").classList.toggle('button--loading')
     let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
     bus_table_current_row=0;
@@ -127,8 +134,8 @@ function writeNameAndRequestURL(){
         let val = params.get('haltestelle');
         halte_id.innerHTML = val.replace("_"," ");
 
-        serverRequestURL = "http://localhost:8080/GET_BUS_INFO/" + val;
-        console.log("Server Request URL = " + serverRequestURL)
+        serverRequestURL_bus = "http://localhost:8080/GET_BUS_INFO/" + val;
+        console.log("Server Request URL = " + serverRequestURL_bus)
         //http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE
 
     }else{
@@ -140,7 +147,42 @@ function setup(){
     updatetime();
     writeNameAndRequestURL();
     fetch_bus_info();
+    fetch_weather_info();
 }
+async function fetch_weather_info(){
+    let json = null;
+
+    //Gets information from URL and returns Promise which has to be resolved using then
+    try{
+        let response = await fetch(serverRequestURL_weather);
+        json = await response.json();
+    }
+    catch(e){
+        console.log("Error")
+        displayError();
+    }
+
+    if(json)
+        write_weather(json);
+    else
+        setTimeout(fetch_bus_info, 5000)
+}
+
+function write_weather(json){
+    console.log(json)
+
+    document.getElementById("weather_min_heute").innerHTML = "Max: " + json[0].min + "°C"
+    document.getElementById("weather_max_heute").innerHTML = "Min: " + json[0].max + "°C"
+    document.getElementById("weather_status_heute").innerHTML = "Status: " + json[0].symbol.description
+    document.getElementById("weather_icon_heute").src = json[0].symbol.imageUrl
+
+
+    document.getElementById("weather_min_morgen").innerHTML = "Max: " + json[1].min + "°C"
+    document.getElementById("weather_max_morgen").innerHTML = "Min: " + json[1].max + "°C"
+    document.getElementById("weather_status_morgen").innerHTML = "Status: " + json[1].symbol.description
+    document.getElementById("weather_icon_morgen").src = json[1].symbol.imageUrl
+}
+
 
 console.log("test");
 

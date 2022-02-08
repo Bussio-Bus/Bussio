@@ -27,7 +27,7 @@
         </button>
 
         <div id="error_msg_div_id" class="error_msg_div_class_none">
-            <p id="error_msg_id">Error MSG</p>
+            <p id="error_msg_id">Es ist ein Fehler aufgetreten - Bitte versuche es erneut</p>
         </div>
     </div>
 
@@ -51,10 +51,23 @@
 
     <div class="AndereInformationen-table">
         <div class="AndereInformationen-tablecell">
-            <img class="AndereInformationen-img" src="res/sun.png">
+            <img id="weather_icon_heute" class="AndereInformationen-img" src="res/sun.png">
+            <div class="AndereInformationen-info">
+                <h5>Heute</h5>
+                <p id="weather_max_heute">Max: </p>
+                <p id="weather_min_heute">Min: </p>
+                <p id="weather_status_heute">Status: </p>
+            </div>
         </div>
+
         <div class="AndereInformationen-tablecell">
-            <img class="AndereInformationen-img" src="res/sun.png">
+            <img id="weather_icon_morgen" class="AndereInformationen-img" src="res/sun.png">
+            <div class="AndereInformationen-info">
+                <h5>Morgen</h5>
+                <p id="weather_max_morgen">Max: </p>
+                <p id="weather_min_morgen">Min: </p>
+                <p id="weather_status_morgen">Status: </p>
+            </div>
         </div>
     </div>
 
