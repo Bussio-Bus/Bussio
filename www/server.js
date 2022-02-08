@@ -114,8 +114,28 @@ app.get("/GET_WEATHER_INFO/:name?/", async (req, res)=>{
         console.log("[SERVER]: unable to get info")
         res.status(400).send("unable to get info");
     }
+});
 
+app.get("/GET_STOPS/", (req, res)=>{
+
+    console.log("[SERVER]: incoming GET_STOPS request");
+    let ret_json = {
+        "stops":[
+
+        ]
+    };
+    try {
+        const data = fs.readFileSync('./res/stops', 'utf8')
+        console.log(data)
+        data.split(',').forEach(value => ret_json.stops.push({"name":value.toString()}))
+    } catch (err) {
+        console.error("[SERVER]: could not read from file, reason:" + err)
+        res.status(400).send("could not get stops")
+    }
+
+    console.log(ret_json);
+    console.log("[SERVER]: sending info")
+    res.status(200).send(ret_json)
 
 
 });
-
