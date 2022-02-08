@@ -170,14 +170,14 @@ async function fetch_weather_info(){
 function write_weather(json){
     console.log(json)
 
-    document.getElementById("weather_min_heute").innerHTML = "Max: " + json[0].min + "°C"
-    document.getElementById("weather_max_heute").innerHTML = "Min: " + json[0].max + "°C"
+    document.getElementById("weather_min_heute").innerHTML = "Max: " + json[0].max + "°C"
+    document.getElementById("weather_max_heute").innerHTML = "Min: " + json[0].min + "°C"
     document.getElementById("weather_status_heute").innerHTML = "Status: " + json[0].symbol.description
     document.getElementById("weather_icon_heute").src = json[0].symbol.imageUrl
 
 
-    document.getElementById("weather_min_morgen").innerHTML = "Max: " + json[1].min + "°C"
-    document.getElementById("weather_max_morgen").innerHTML = "Min: " + json[1].max + "°C"
+    document.getElementById("weather_min_morgen").innerHTML = "Max: " + json[1].max + "°C"
+    document.getElementById("weather_max_morgen").innerHTML = "Min: " + json[1].min + "°C"
     document.getElementById("weather_status_morgen").innerHTML = "Status: " + json[1].symbol.description
     document.getElementById("weather_icon_morgen").src = json[1].symbol.imageUrl
 }
