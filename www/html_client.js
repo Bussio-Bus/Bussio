@@ -44,10 +44,9 @@ async function fetch_bus_info(){
 
     //console.log(json);
     //print_info(json)
-    if(json)
-        feedtable(json);
-    else
-        setTimeout(fetch_bus_info, 5000)
+    if(json) feedtable(json);
+
+    setTimeout(reload_table, 60000)
 }
 
 function print_info(json){
