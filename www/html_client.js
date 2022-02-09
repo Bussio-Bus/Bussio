@@ -30,10 +30,10 @@ function hideError(){
 
 async function fetch_bus_info(){
     let json = null;
-
+    let response = "";
     //Gets information from URL and returns Promise which has to be resolved using then
     try{
-        let response = await fetch(serverRequestURL_bus);
+        response = await fetch(serverRequestURL_bus);
         json = await response.json();
     }
     catch(e){
@@ -41,8 +41,11 @@ async function fetch_bus_info(){
         displayError();
     }
 
-
-    //console.log(json);
+    if(response.status === 401){
+        console.log("Haltestelle nicht gefunden!")
+        displayError();
+        return;
+    }
     //print_info(json)
     if(json) feedtable(json);
 

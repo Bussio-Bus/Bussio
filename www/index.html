@@ -20,21 +20,6 @@
 
 <input id="searchbar" onkeyup="suche_haltestelle()" type="text"
        name="search" placeholder="Haltestelle..">
-
-<ol id="list">
-    <li class="haltestelle" onclick="clicked(this)">Brixen Dantestrasse</li>
-    <li class="haltestelle" onclick="clicked(this)">Brixen Brixen Bahnhof</li>
-    <li class="haltestelle" onclick="clicked(this)">Sterzing Bahnhof</li>
-    <li class="haltestelle" onclick="clicked(this)">Sterzing Nordpark</li>
-    <li class="haltestelle" onclick="clicked(this)">Gorilla</li>
-    <li class="haltestelle" onclick="clicked(this)">Monkey</li>
-    <li class="haltestelle" onclick="clicked(this)">Turtle</li>
-    <li class="haltestelle" onclick="clicked(this)">Whale</li>
-    <li class="haltestelle" onclick="clicked(this)">Aligator</li>
-    <li class="haltestelle" onclick="clicked(this)" id="donkey_id">Donkey</li>
-    <li class="haltestelle" onclick="clicked(this)">Horse</li>
-</ol>
-
 <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table id="All_stops_id" class="table table-bordered table-striped mb-0">
         <thead>
@@ -50,19 +35,50 @@
 
 
 <script>
+    lastInput = ""
+
     function suche_haltestelle() { //maybe https://www.w3schools.com/howto/howto_js_filter_table.asp
-        let input = document.getElementById('searchbar').value
-        input=input.toLowerCase();
-        let x = document.getElementsByClassName('haltestelle');
+        let table = document.getElementById("All_stops_id").getElementsByTagName("tbody")[0];
+        del_index=0;
+
+        let input_org = document.getElementById('searchbar').value
+        let input=input_org.toLowerCase();
+        let x = document.getElementsByClassName('haltestelle_row');
+
+        let input_for_table = {
+            "stops":[
+                {"name": input}
+            ]
+        }
+
+        let reg = /">[\w ]+<\//g;
+
 
         for (i = 0; i < x.length; i++) {
-            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            let content = x[i].innerHTML.toLowerCase().match(reg)[0].split('');
+            content.shift();content.shift();
+            content.pop();content.pop();
+            content = content.join('')
+
+
+            //console.log(x[i].del_id + "==="  + "del")
+            if(x[i].del_id === "del"){
+                table.deleteRow(i)
+                continue
+            }
+            lastInput = content;
+
+            if (!content.includes(input_org)) {
                 x[i].style.display="none";
             }
             else {
-                x[i].style.display="list-item";
+                x[i].style.display="table-row";
             }
         }
+        if(input === ""){
+            return;
+        }
+        feedtable_line(input_for_table, 0, true)
     }
 
     function clicked(el){
@@ -71,23 +87,45 @@
         window.location.href = 'info.html?haltestelle=' + name;
     }
 
+    serverRequestURL_stops = "http://localhost:8080/GET_STOPS";
+    async function fetch_stops_info(){
+        let json = null;
+
+        //Gets information from URL and returns Promise which has to be resolved using then
+        try{
+            let response = await fetch(serverRequestURL_stops);
+            json = await response.json();
+        }
+        catch(e){
+            console.log("Error")
+        }
+
+
+        //console.log(json);
+        //print_info(json)
+        if(json) feedtable(json);
+
+        //setTimeout(fetch_stops_info, 60000)
+    }
 
     function feedtable(json){
-        for(line=0; line<5; line++){
+        for(line=0; line<json.stops.length; line++){
             feedtable_line(json, line)
         }
     }
 
-    function feedtable_line(json, line=0){
+    function feedtable_line(json, line=0, todelete=false){
         let table = document.getElementById("All_stops_id").getElementsByTagName("tbody")[0];
         var row = table.insertRow();
-
+        if(todelete){
+            row.del_id = "del";
+        }
+        row.className = "haltestelle_row"
         var cell = row.insertCell(0);
-        cell.innerHTML = "<p class='haltestelle' onclick=clicked(this)>test</p>"
-        console.log("hmm")
+        cell.innerHTML = "<p class='haltestelle' onclick=clicked(this)>" + json.stops[line].name + "</p>"
     }
 
-    feedtable("test");
+    fetch_stops_info();
 </script>
 </body>
 

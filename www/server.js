@@ -72,7 +72,7 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
         let response = await fetch(fetch_string);
         json = await response.json();
 
-        if(json.servingLines != null){
+        if(json.servingLines.lines != null){
             if(!checkDuplicateStops(name)) {
                 addStop(name)
                 console.log("[SERVER]: Added new stop, " + name)
@@ -80,7 +80,7 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
         }
         else{
             console.log("[SERVER]: serving lines is null")
-            res.status(400).send("unable to get info");
+            res.status(401).send("unable to get info");
             return;
         }
     }
