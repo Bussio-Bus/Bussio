@@ -50,7 +50,7 @@
 
         let input_for_table = {
             "stops":[
-                {"name": input}
+                {"name": input_org}
             ]
         }
 
@@ -71,7 +71,7 @@
             }
             lastInput = content;
 
-            if (!content.includes(input_org)) {
+            if (!content.includes(input)) {
                 x[i].style.display="none";
             }
             else {
