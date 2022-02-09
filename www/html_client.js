@@ -18,9 +18,10 @@ function suche_haltestelle() {
     }
 }
 
-function displayError(){
+function displayError(message="Es ist ein Fehler aufgetreten - Bitte versuche es erneut"){
     document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_none")
     document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
+    document.getElementById("error_msg_div_id").innerHTML = message
 }
 
 function hideError(){
@@ -42,8 +43,8 @@ async function fetch_bus_info(){
     }
 
     if(response.status === 401){
-        console.log("Haltestelle nicht gefunden!")
-        displayError();
+        //console.log("Haltestelle nicht gefunden!")
+        displayError("Haltestelle nicht gefunden - Bitte versuche eine andere Haltestelle");
         return;
     }
     //print_info(json)

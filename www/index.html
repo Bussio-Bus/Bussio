@@ -11,6 +11,9 @@
 <div class="Ueberschrift">
     <h1>Bussio</h1>
 </div>
+<div id="error_msg_div_id" class="error_msg_div_class_none">
+    <p id="error_msg_id">Es ist ein Fehler aufgetreten - Bitte versuche es erneut</p>
+</div>
 
 <div class="desc">
     <p>Welche Haltestelle möchtest du anzeigen</p>
@@ -98,6 +101,7 @@
         }
         catch(e){
             console.log("Error")
+            displayError();
         }
 
 
@@ -125,6 +129,16 @@
         cell.innerHTML = "<p class='haltestelle' onclick=clicked(this)>" + json.stops[line].name + "</p>"
     }
 
+    function displayError(message="Es ist ein Fehler aufgetreten - Bitte versuche es erneut"){
+        document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_none")
+        document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
+        document.getElementById("error_msg_div_id").innerHTML = message
+    }
+
+    function hideError(){
+        document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_show")
+        document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_none")
+    }
     fetch_stops_info();
 </script>
 </body>

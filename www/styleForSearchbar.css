@@ -51,3 +51,20 @@ input[type=text]:focus {
 .table-wrapper-scroll-y {
     display: block;
 }
+
+.error_msg_div_class_show{
+    display: block;
+    margin-left: 35%;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    color: red;
+
+
+}
+
+.error_msg_div_class_none{
+    display: none;
+    margin-left: 35%;
+    padding-top: 10px;
+    color: red;
+}
