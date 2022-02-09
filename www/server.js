@@ -65,6 +65,8 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
     fetch_string+="&itdDateDayMonthYear="+day+"-"+month+"-" +new Date().getFullYear()
     fetch_string+="&itdTime="+hour+""+ (parseInt(minute) > 9 ? minute.toString()  : "0" + minute.toString())
 
+    let name_str = name.join(" ");
+
     console.log("[SERVER]: incoming GET_BUS_INFO request")
     console.log("[SERVER]: request-> " + fetch_string);
     let json = null;
@@ -73,9 +75,9 @@ app.get("/GET_BUS_INFO/:name/:dd?/:mm?/:hh?/:min?/", async (req, res) =>{
         json = await response.json();
 
         if(json.servingLines.lines != null){
-            if(!checkDuplicateStops(name)) {
-                addStop(name)
-                console.log("[SERVER]: Added new stop, " + name)
+            if(!checkDuplicateStops(name_str)) {
+                addStop(name_str)
+                console.log("[SERVER]: Added new stop, " + name_str)
             }
         }
         else{
@@ -195,8 +197,8 @@ app.post("/ADD_STOP/:stop", async (req, res) =>{
 function checkDuplicateStops(stop){
     stop = stop.replaceAll("_", " ");
     const data = fs.readFileSync('./res/stops', 'utf8')
-
-    if(data.toLowerCase().split(",").includes(stop))
+    console.log(data);
+    if(data.toLowerCase().split(",").includes(stop.toLowerCase()))
         return true
     else
         return false
