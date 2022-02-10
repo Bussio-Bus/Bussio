@@ -107,8 +107,15 @@ async function reload_table() {
 
     await fetch_bus_info();
 
-    while (bus_table_current_row+5 > 5) {
-        table.deleteRow((bus_table_current_row--) - 1+5)
+    console.log(table.rows);
+
+    //while (bus_table_current_row+5 > 5) {
+    //    table.deleteRow((bus_table_current_row--) - 1+5)
+    //}
+
+    while(table.rows.length > 5){   //Schaut nach ob durch irgendeinen fehler mehr rows sind. Dann löscht er diesen
+        bus_table_current_row--
+        table.deleteRow(table.rows.length-1)
     }
 
 
@@ -174,16 +181,29 @@ async function fetch_weather_info(){
 function write_weather(json){
     console.log(json)
 
-    document.getElementById("weather_max_heute").innerHTML = "Max: " + json[0].max + "°C"
-    document.getElementById("weather_min_heute").innerHTML = "Min: " + json[0].min + "°C"
-    document.getElementById("weather_status_heute").innerHTML = "Status: " + json[0].symbol.description
-    document.getElementById("weather_icon_heute").src = json[0].symbol.imageUrl
+    if(json[0] != null){
+        document.getElementById("weather_max_heute").innerHTML = "Max: " + json[0].max + "°C"
+        document.getElementById("weather_min_heute").innerHTML = "Min: " + json[0].min + "°C"
+        document.getElementById("weather_status_heute").innerHTML = "Status: " + json[0].symbol.description
+        document.getElementById("weather_icon_heute").src = json[0].symbol.imageUrl
+    }else{
+        document.getElementById("weather_max_heute").innerHTML = "Max: " + "No Info"
+        document.getElementById("weather_min_heute").innerHTML = "Min: " +"No Info"
+        document.getElementById("weather_status_heute").innerHTML = "Status: " +"No Info"
+    }
 
 
-    document.getElementById("weather_max_morgen").innerHTML = "Max: " + json[1].max + "°C"
-    document.getElementById("weather_min_morgen").innerHTML = "Min: " + json[1].min + "°C"
-    document.getElementById("weather_status_morgen").innerHTML = "Status: " + json[1].symbol.description
-    document.getElementById("weather_icon_morgen").src = json[1].symbol.imageUrl
+    if(json[1] != null){
+        document.getElementById("weather_max_morgen").innerHTML = "Max: " + json[1].max + "°C"
+        document.getElementById("weather_min_morgen").innerHTML = "Min: " + json[1].min + "°C"
+        document.getElementById("weather_status_morgen").innerHTML = "Status: " + json[1].symbol.description
+        document.getElementById("weather_icon_morgen").src = json[1].symbol.imageUrl
+    }else{
+        document.getElementById("weather_max_morgen").innerHTML = "Max: " + "No Info"
+        document.getElementById("weather_min_morgen").innerHTML = "Min: " + "No Info"
+        document.getElementById("weather_status_morgen").innerHTML = "Status: " + "No Info"
+    }
+
 }
 
 
