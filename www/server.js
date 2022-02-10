@@ -1,7 +1,6 @@
 const express = require('express');
 var cors = require('cors')
 const path = require('path');
-const cheerio = require('cheerio')
 const fs = require('fs');
 const app = express()
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -13,7 +12,7 @@ app.use(cors())
 
 //Middleware which parses Requestbody as JSON
 app.use(express.json());
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 //starting server and adding a callback function to notify when it has started
 app.listen(PORT, () => console.log(`[SERVER]: running on localhost: ${PORT}`));
