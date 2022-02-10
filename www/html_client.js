@@ -206,6 +206,9 @@ function write_weather(json){
 
 }
 
+function return_to_index() {
+    window.location.href = 'index.html';
+}
 
 console.log("test");
 
