@@ -39,8 +39,8 @@
 
 <script>
     lastInput = ""
-
-    function suche_haltestelle() { //maybe https://www.w3schools.com/howto/howto_js_filter_table.asp
+    // Für den Table wenn man in die Suche etwas eingibt, dass es nur die relevanten Lösungen anzeigt.
+    function suche_haltestelle() {
         let table = document.getElementById("All_stops_id").getElementsByTagName("tbody")[0];
         del_index=0;
 
@@ -54,7 +54,7 @@
             ]
         }
 
-        let reg = /">[\w ]+<\//g;
+        let reg = /">[\w ]+<\//g;   //Cool regex :sunglasses:
 
 
         for (i = 0; i < x.length; i++) {
@@ -84,6 +84,7 @@
         feedtable_line(input_for_table, 0, true)
     }
 
+    //Wenn der User auf eine Haltestelle klickt, passiert die Umleitung auf die info seite
     function clicked(el){
         console.log(el)
         let name = el.innerHTML.replace(" ", "_")
@@ -112,12 +113,14 @@
         //setTimeout(fetch_stops_info, 60000)
     }
 
+    //Um den Table zu fuettern mit allen möglichen Haltestellen
     function feedtable(json){
         for(line=0; line<json.stops.length; line++){
             feedtable_line(json, line)
         }
     }
 
+    //Um die informationen in den table reinzuschreiben. Nur eine Zeile
     function feedtable_line(json, line=0, todelete=false){
         let table = document.getElementById("All_stops_id").getElementsByTagName("tbody")[0];
         var row = table.insertRow();
@@ -129,16 +132,21 @@
         cell.innerHTML = "<p class='haltestelle' onclick=clicked(this)>" + json.stops[line].name + "</p>"
     }
 
+
+    //Um einen error anzuzeigen
     function displayError(message="Es ist ein Fehler aufgetreten - Bitte versuche es erneut"){
         document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_none")
         document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
         document.getElementById("error_msg_div_id").innerHTML = message
     }
 
+    //Um einen error zu verstecken
     function hideError(){
         document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_show")
         document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_none")
     }
+
+    //start
     fetch_stops_info();
 </script>
 </body>

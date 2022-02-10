@@ -1,34 +1,22 @@
-let serverRequestURL_bus=""
-let serverRequestURL_weather="http://localhost:8080/GET_WEATHER_INFO/Eisacktal"
+let serverRequestURL_bus=""         //URL for the server for bus
+let serverRequestURL_weather="http://localhost:8080/GET_WEATHER_INFO/Eisacktal" //URL for the server for weather
 
 
-//TODO: verspätung entfernen und wos onderes adden vlt
-function suche_haltestelle() {
-    let input = document.getElementById('searchbar').value
-    input=input.toLowerCase();
-    let x = document.getElementsByClassName('haltestelle');
-
-    for (i = 0; i < x.length; i++) {
-        if (!x[i].innerHTML.toLowerCase().includes(input)) {
-            x[i].style.display="none";
-        }
-        else {
-            x[i].style.display="list-item";
-        }
-    }
-}
-
+//function um einen Fehler auf der Seite anzuzeigen
 function displayError(message="Es ist ein Fehler aufgetreten - Bitte versuche es erneut"){
     document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_none")
     document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_show")
     document.getElementById("error_msg_div_id").innerHTML = message
 }
 
+//Um den Fehler wieder zu verstecken
 function hideError(){
     document.getElementById("error_msg_div_id").classList.remove("error_msg_div_class_show")
     document.getElementById("error_msg_div_id").classList.add("error_msg_div_class_none")
 }
 
+
+//Funktion um von unserem Webserver die Daten abzufragen
 async function fetch_bus_info(){
     let json = null;
     let response = "";
@@ -47,20 +35,14 @@ async function fetch_bus_info(){
         displayError("Haltestelle nicht gefunden - Bitte versuche eine andere Haltestelle");
         return;
     }
-    //print_info(json)
     if(json) feedtable(json);
 
     setTimeout(reload_table, 60000)
 }
 
-function print_info(json){
-    for (const linesKey in json.servingLines.lines) {
-        console.log(json.servingLines.lines[linesKey].mode.destination + " " + json.servingLines.lines[linesKey].mode.name)
-    }
-    console.log("-------------------------------------------");
-}
 
 
+//Funktion um den table zu "füttern mit informationen" es wird hier nur eine line hinzugefügt
 let bus_table_current_row=0;
 function feedtable_line(json, line=0){
     let table = document.getElementById("bus-table").getElementsByTagName("tbody")[0];
@@ -75,12 +57,14 @@ function feedtable_line(json, line=0){
     }
 }
 
+//Funktion um den Table mit 5 lines aufzufüllen
 function feedtable(json){
     for(line=0; line<5; line++){
         feedtable_line(json, line)
     }
 }
 
+//Funktion um vom übergebenen json die Infos für den Table zu kriegen
 function getInformation(index, json, json_Dep){
     let string="No Info"
     if(json == undefined){
@@ -98,7 +82,7 @@ function getInformation(index, json, json_Dep){
     return string;
 }
 
-
+//Funktion um den table zu reloaden. Wenn der User z.B. auf den Button drückt
 async function reload_table() {
     hideError();
     document.getElementById("reload_id").classList.toggle('button--loading')
@@ -122,7 +106,7 @@ async function reload_table() {
     document.getElementById("reload_id").classList.toggle('button--loading')
 }
 
-//feedtable_line();
+//Funktion um die Zeit pro Sekunde zu updaten
 function updatetime(){
     let element = document.getElementById("Jetzige-Zeit-id");
     let today = new Date();
@@ -134,6 +118,7 @@ function updatetime(){
     setTimeout(updatetime, 1000);
 }
 
+//Funktion um den Namen der Haltestelle zu schreiben und auch die Request URL für den Bus aufzubauen
 function writeNameAndRequestURL(){
     //const urlSearchParams = new URLSearchParams(window.location.search);
     //const params = Object.fromEntries(urlSearchParams.entries());
@@ -153,12 +138,15 @@ function writeNameAndRequestURL(){
     }
 }
 
+//Setup funktion die beim start der Seite aufgerufen wird
 function setup(){
     updatetime();
     writeNameAndRequestURL();
     fetch_bus_info();
     fetch_weather_info();
 }
+
+//Funktion um die Wetter info zu verarbeiten und anzufragen
 async function fetch_weather_info(){
     let json = null;
 
@@ -178,6 +166,7 @@ async function fetch_weather_info(){
         setTimeout(fetch_bus_info, 5000)
 }
 
+//Funktion um das Wettter in das HTML zu schreiben
 function write_weather(json){
     console.log(json)
 
@@ -206,10 +195,9 @@ function write_weather(json){
 
 }
 
+//Funktion wenn der User auf den Zurück Knopf drückt
 function return_to_index() {
     window.location.href = 'index.html';
 }
-
-console.log("test");
 
 setup()
