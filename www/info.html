@@ -8,81 +8,81 @@
 </head>
 
 <body>
-    <div id="goBack_div_id">
-        <button id="goBack_id" type="button" class="button" onclick="return_to_index()">
-            <span class="button__text"><--</span>
-        </button>
+<div id="goBack_div_id">
+    <button id="goBack_id" type="button" class="button" onclick="return_to_index()">
+        <span class="button__text"><--</span>
+    </button>
+</div>
+
+<div class="Ueberschrift">
+    <h1>Bussio</h1>
+</div>
+
+<div class="Bushaltestelle-div">
+    <div>
+        <h2>Bushaltestelle: </h2>
     </div>
-
-    <div class="Ueberschrift">
-        <h1>Bussio</h1>
+    <div>
+        <h4 id="Bushaltestelle-id">Dantestrasse</h4>
     </div>
+</div>
 
-    <div class="Bushaltestelle-div">
-        <div>
-            <h2>Bushaltestelle: </h2>
-        </div>
-        <div>
-            <h4 id="Bushaltestelle-id">Dantestrasse</h4>
-        </div>
+<div id="reload_error_div_id">
+    <button id="reload_id" type="button" class="button" onclick="reload_table()">
+        <span class="button__text">Reload</span>
+    </button>
+
+    <div id="error_msg_div_id" class="error_msg_div_class_none">
+        <p id="error_msg_id">Es ist ein Fehler aufgetreten - Bitte versuche es erneut</p>
     </div>
-
-    <div id="reload_error_div_id">
-        <button id="reload_id" type="button" class="button" onclick="reload_table()">
-            <span class="button__text">Reload</span>
-        </button>
-
-        <div id="error_msg_div_id" class="error_msg_div_class_none">
-            <p id="error_msg_id">Es ist ein Fehler aufgetreten - Bitte versuche es erneut</p>
-        </div>
-    </div>
+</div>
 
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover" id="bus-table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nummer</th>
-                <th scope="col">Ziel</th>
-                <th scope="col">Abfahrtszeit</th>
-                <th scope="col">Abfahrt in</th>
-            </tr>
-            </thead>
-            <tbody>
+<div class="table-responsive">
+    <table class="table table-striped table-hover" id="bus-table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nummer</th>
+            <th scope="col">Ziel</th>
+            <th scope="col">Abfahrtszeit</th>
+            <th scope="col">Abfahrt in</th>
+        </tr>
+        </thead>
+        <tbody>
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 
-    <div class="AndereInformationen-table">
-        <div class="AndereInformationen-tablecell">
-            <img id="weather_icon_heute" class="AndereInformationen-img" src="res/sun.png">
-            <div class="AndereInformationen-info">
-                <h5>Heute</h5>
-                <p id="weather_max_heute">Max: </p>
-                <p id="weather_min_heute">Min: </p>
-                <p id="weather_status_heute">Status: </p>
-            </div>
-        </div>
-
-        <div class="AndereInformationen-tablecell">
-            <img id="weather_icon_morgen" class="AndereInformationen-img" src="res/sun.png">
-            <div class="AndereInformationen-info">
-                <h5>Morgen</h5>
-                <p id="weather_max_morgen">Max: </p>
-                <p id="weather_min_morgen">Min: </p>
-                <p id="weather_status_morgen">Status: </p>
-            </div>
+<div class="AndereInformationen-table">
+    <div class="AndereInformationen-tablecell">
+        <img id="weather_icon_heute" class="AndereInformationen-img" src="res/sun.png">
+        <div class="AndereInformationen-info">
+            <h5>Heute</h5>
+            <p id="weather_max_heute">Max: </p>
+            <p id="weather_min_heute">Min: </p>
+            <p id="weather_status_heute">Status: </p>
         </div>
     </div>
 
-
-    <div class="Jetztige-Zeit-Div">
-        <h2 id="Jetzige-Zeit-id">13:12</h2>
+    <div class="AndereInformationen-tablecell">
+        <img id="weather_icon_morgen" class="AndereInformationen-img" src="res/sun.png">
+        <div class="AndereInformationen-info">
+            <h5>Morgen</h5>
+            <p id="weather_max_morgen">Max: </p>
+            <p id="weather_min_morgen">Min: </p>
+            <p id="weather_status_morgen">Status: </p>
+        </div>
     </div>
+</div>
 
-    <script type="text/javascript" src="html_client.js"></script>
+
+<div class="Jetztige-Zeit-Div">
+    <h2 id="Jetzige-Zeit-id">13:12</h2>
+</div>
+
+<script type="text/javascript" src="html_client.js"></script>
 </body>
 
 </html>

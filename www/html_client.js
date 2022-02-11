@@ -1,5 +1,7 @@
+//let serverRequestURL_bus=""         //URL for the server for bus
+//let serverRequestURL_weather="http://localhost:8080/GET_WEATHER_INFO/Eisacktal" //URL for the server for weather
 let serverRequestURL_bus=""         //URL for the server for bus
-let serverRequestURL_weather="http://localhost:8080/GET_WEATHER_INFO/Eisacktal" //URL for the server for weather
+let serverRequestURL_weather="http://10.10.30.15:8085/GET_WEATHER_INFO/Eisacktal" //URL for the server for weather
 
 
 //function um einen Fehler auf der Seite anzuzeigen
@@ -73,8 +75,8 @@ function getInformation(index, json, json_Dep){
     //console.log(json_Dep);
     switch (index){
         case 0: string = bus_table_current_row; break;
-        case 1: string = json.mode.number; break;
-        case 2: string = json.mode.destination; break;
+        case 1: string = json_Dep.servingLine.number; break;
+        case 2: string = json_Dep.servingLine.direction; break;
         case 3: string = json_Dep.dateTime.hour + ":" + (json_Dep.dateTime.minute > 9 ? json_Dep.dateTime.minute : "0" + json_Dep.dateTime.minute); break;
         case 4: string = json_Dep.countdown;
     }
@@ -129,7 +131,8 @@ function writeNameAndRequestURL(){
         let val = params.get('haltestelle');
         halte_id.innerHTML = val.replace("_"," ");
 
-        serverRequestURL_bus = "http://localhost:8080/GET_BUS_INFO/" + val;
+        //serverRequestURL_bus = "http://localhost:8080/GET_BUS_INFO/" + val;
+        serverRequestURL_bus = "http://10.10.30.15:8085/GET_BUS_INFO/" + val;
         console.log("Server Request URL = " + serverRequestURL_bus)
         //http://localhost:8080/GET_BUS_INFO/BRIXEN_DANTESTRAßE
 

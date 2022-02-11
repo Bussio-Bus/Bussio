@@ -91,7 +91,9 @@
         window.location.href = 'info.html?haltestelle=' + name;
     }
 
-    serverRequestURL_stops = "http://localhost:8080/GET_STOPS";
+
+    //serverRequestURL_stops = "http://localhost:8080/GET_STOPS";
+    serverRequestURL_stops = "http://10.10.30.15:8085/GET_STOPS";
     async function fetch_stops_info(){
         let json = null;
 

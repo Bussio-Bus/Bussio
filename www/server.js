@@ -12,10 +12,12 @@ app.use(cors())
 
 //Middleware which parses Requestbody as JSON
 app.use(express.json());
-const PORT = process.env.PORT || 8080;
+//const PORT = process.env.PORT || 8085;
+const PORT = 8085;
+const IP = "10.10.30.15"
 
 //starting server and adding a callback function to notify when it has started
-app.listen(PORT, () => console.log(`[SERVER]: running on localhost: ${PORT}`));
+app.listen(PORT, IP, () => console.log(`[SERVER]: running on ${IP}: ${PORT}`));
 
 
 app.get("/", (req, res) =>{

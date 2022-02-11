@@ -35,11 +35,9 @@ body{
     min-height: 180px;
     max-height: 200px;
     min-width: 100%;
-    #background-color: red;
 }
 
 .AndereInformationen-tablecell{
-    #justify-content: center;
     padding-left: 0px;
     padding-right: 20%;
     display: flex;
@@ -72,7 +70,6 @@ body{
 .button {
     position: relative;
     padding: 8px 16px;
-    #background: #009579;
     background: #92cec9;
     border: none;
     outline: none;
@@ -81,7 +78,6 @@ body{
 }
 
 .button:active {
-    #background: #007a63;
     background: #82b2a6;
 }
 
@@ -140,9 +136,6 @@ body{
     color: red;
 }
 
-#goBack_id{
-
-}
 
 #goBack_div_id{
     margin-left: -10%;
