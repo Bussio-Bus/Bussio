@@ -8,4 +8,4 @@ Coole, simple und einfach zu benutzende Webseiten-Anzeige für [STA (Strutture T
 
 
 ## Documentation
-Dokumentation kann hier gefunden werden [hier](https://github.com/Bussio-Bus/Bussio/wiki/)
+Dokumentation kann [hier](https://github.com/Bussio-Bus/Bussio/wiki/) gefunden werden 
